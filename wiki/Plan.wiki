@@ -1,0 +1,10 @@
+#summary Project Plan
+#labels Featured
+
+= Plan =
+
+Objetivo y alcance
+Calendario
+Entregables
+Comunidad
+Puntos abiertos
