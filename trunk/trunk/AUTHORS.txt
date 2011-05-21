@@ -1,0 +1,8 @@
+The main authors of this plugin are:
+ + Carlos Parra <carlospc@gmail.com>
+
+This plugin is based on CMI plugin who was developed by:
+ * José Manuel Prieto <jmprieto@emergya.es>
+ * David Teyssiere <dteyssiere@emergya.es>
+ * Clara Meniz <cmeniz@emergya.es>
+ * Carlos Parra <cparra@emergya.es>

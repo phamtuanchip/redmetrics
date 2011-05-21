@@ -1,0 +1,20 @@
+<tr>
+  <th rowspan="<%= 1 + @roles.length %>"><%= l('cmi.label_planned') %></th>
+
+  <% @roles.each do |role| %>
+    <td><%=h role %></td>
+    <% @reports.each do |report| %>
+      <td class="issue"><%= report.effort_planned_by_role(role) %> <%= l('cmi.label_hours') %></td>
+    <% end %>
+    </tr>
+    <tr>
+  <% end %>
+
+  <td><%= l(:label_total) %></td>
+  <% @names.each_with_index do |report, i| %><%# TODO kill this @names thing %>
+    <td class="issue">
+      <%= get_report_value(report, 'effort_real') %>
+      <%= effort_planned_graph(@reports[i], @roles) %>
+    </td>
+   <% end %>
+</tr>
