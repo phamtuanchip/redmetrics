@@ -1,0 +1,41 @@
+<% content_for :header_tags do %>
+  <style>
+    table.list thead th {white-space:normal;}
+  </style>
+<% end %>
+
+<h1><%= l('redmetrics.label_Redmetrics') %></h1>
+<h2><%= l('redmetrics.label_metrics') %></h2>
+
+<% form_remote_tag(:url => {}, :update => 'content') do %>
+  <%= l('redmetrics.label_filter_by') %>: <%= select_tag(:selected_project_group, options_for_select([nil] + @groups, params[:selected_project_group]),
+                                                          :onchange => "this.form.onsubmit();",
+                                                          :style => 'width: 200px',
+                                                          :id => nil) %></p>
+
+<div id="redmetricsplugin" name="redmetricsplugin">
+  <table class="list issues">
+    <thead>
+      <tr>
+        <th rowspan="1"><%= l('redmetrics.label_name') %></th>
+        <th colspan="1"><%= l('redmetrics.label_identifier') %></th>
+        <th colspan="1"><%= l('redmetrics.label_coordinator') %></th>
+        <th colspan="1"><%= l('redmetrics.label_expedient') %></th>
+        <th colspan="1"><%= l('redmetrics.label_typology') %></th>
+        <th colspan="1"><%= l('redmetrics.label_observations_redmetrics') %></th>
+        <th colspan="1"><%= l('redmetrics.label_stages_redmetrics') %></th>
+        <th colspan="1"><%= l('redmetrics.label_metrics') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <%= render :partial => 'project', :locals => { :project => project, :last_report => @last_report } %>
+      <% end %>
+      <thead><tr class="<%= cycle('odd', 'even') %>"><td colspan="10"><%= l('redmetrics.label_archived') %></td></tr></thead>
+      <% @archived.each do |project| %>
+        <%= render :partial => 'project', :locals => { :project => project, :last_report => @last_archived_report } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%end%>
