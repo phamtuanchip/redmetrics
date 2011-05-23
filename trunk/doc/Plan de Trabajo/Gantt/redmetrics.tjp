@@ -1,0 +1,181 @@
+project redmetrics "Redmetrics" "1.0" 2011-01-01 - 2011-09-12 {
+
+  timeformat "%Y-%m-%d"
+  currency "EUR"
+}
+
+task redmetrics "Redmetrics" {
+  start 2011-03-16
+  task plan_de_trabajo "Plan de trabajo" {
+    task objetivos "Definición de objetivos" {
+      start 2011-03-02
+      end 2011-03-06
+    }
+    task analisis_arte "Anális del estado del arte" {
+      depends !objetivos
+      start 2011-03-06
+      end 2011-03-10
+    }
+    task def_alcance "Definición del alcance" {
+      depends !analisis_arte
+      start 2011-03-10
+      end 2011-03-14
+    }
+    task creac_plan "Elaboración del plan" {
+      depends !def_alcance
+      start 2011-03-14
+      end 2011-03-16
+    }
+  }
+  task pec1_deadline "PEC1 deadline!" {
+    milestone
+    start 2011-03-16
+  }
+  task analisis "Análisis" {
+    depends !plan_de_trabajo
+    task requisitos "Creación del catálogo de requisitos" {
+      end 2011-03-27
+    }
+    task analisis_funcional "Creación del análisis funcional" {
+      depends !requisitos
+      start 2011-03-27
+      end 2011-04-03
+    }
+  }
+  task disenyo "Diseño" {
+    depends !analisis
+    task disen_modelo "Diseño del modelo" {
+      end 2011-04-10
+    }
+    task disen_vista "Diseño de la vista" {
+      end 2011-04-10
+    }
+    task disen_negocio "Diseño del controlador" {
+      depends !disen_vista, !disen_modelo
+      end 2011-04-20
+    }
+  }
+  task pec2_deadline "PEC2 deadline!" {
+    milestone
+    start 2011-04-20
+  }
+  task implementacion_prototipo "Implementación del prototipo" {
+    depends !disenyo
+    task selec_prototipo "Definición del prototipo" {
+      end 2011-04-30
+    }
+    task implemen_prototio "Implementación del prototipo" {
+      depends !selec_prototipo
+      end 2011-05-25
+    }
+  }
+  task pec3_deadline "PEC3 deadline!" {
+    milestone
+    start 2011-05-25
+  }
+  task memoria_y_presentacion "Memoria y Presentación" {
+    depends !implementacion_prototipo
+    task memoria "Creación de la memoria" {
+      end 2011-06-04
+    }
+    task presentacion "Creación de la presentacion" {
+      depends !memoria
+      end 2011-06-08
+    }
+  }
+  task pec4_deadline "Memoria y Presentación deadline!" {
+    milestone
+    start 2011-06-08
+  }
+
+  task pec5_deadline "Tribunal Virtual" {
+    milestone
+    start 2011-06-23
+  }
+}
+
+
+taskreport "Diagrama de Gantt - Nivel 1" {
+  headline "Redmetrics - Diagrama de Gantt - Panorámica"
+  columns hierarchindex { title "#" }, name { title "Tarea" }, start { title "Inicio" }, end { title "Fin" }, chart { title "Diagrama" }
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  hideresource 1
+  rolluptask treelevel() > 1
+}
+
+
+taskreport "Diagrama de Gantt - Nivel 2" {
+  headline "Redmetrics - Diagrama de Gantt - Detalle"
+  columns hierarchindex { title "#" }, name { title "Tarea" }, start { title "Inicio" }, end { title "Fin" }, chart { title "Diagrama" }
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  hideresource 1
+  rolluptask treelevel() > 2
+}
+
+
+taskreport "Gantt Chart" {
+  headline "Project Gantt Chart"
+  columns hierarchindex, name, start, end, effort, duration, chart
+
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  hideresource 1
+}
+
+
+taskreport "Task Usage" {
+  headline "Task Usage Report"
+  columns hierarchindex, name, start, end, effort { title "Work" }, duration,
+          cost, revenue
+  timeformat "%Y-%m-%d"
+  loadunit days
+  hideresource 0
+}
+
+# A list of all tasks with the percentage complete for each task
+taskreport "Tracking Gantt" {
+  headline "Tracking Gantt Chart"
+  columns hierarchindex, name, start, end, effort { title "Work" }, duration,
+          completed, chart
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  hideresource 1
+}
+
+# A graph showing resource allocation. It identifies whether each
+# resource is under- or over-allocated for.
+resourcereport "Resource Graph" {
+  headline "Resource Allocation Graph"
+  columns no, name, rate, utilization, freeload, chart
+  loadunit days
+  hidetask 1
+}
+
+# A list of all project resources, both human and material resources,
+# together with the costs for each.
+resourcereport "Resource Sheet" {
+  headline "Resource Sheet"
+  columns no, name, efficiency, id, maxeffort, rate
+  loadunit days
+  hidetask 1
+}
+
+# A list of resources and each task associated with each resource.
+resourcereport "Resource Usage" {
+  headline "Resource Usage Report"
+  columns no, name, utilization, freeload, cost
+  loadunit days
+  hidetask 0
+}
+
+# This report looks like a regular calendar that shows the tasks by
+# their dates.
+htmlweeklycalendar "Calendar.html" {
+}
+
+# This report is a status report for the current week. It also
+# provides an outlook for the next week.
+htmlstatusreport "Status-Report.html" {
+}
