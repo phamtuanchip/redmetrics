@@ -1,0 +1,1 @@
+RedMine metrics plugin is an effort to provide a set of tools to explore what is happening in the projects.
